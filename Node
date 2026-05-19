@@ -1,22 +1,22 @@
 package com.example.practica4listas;
 
 import java.util.ArrayList;
+
 /**
- * Clase Node
+ * Clase Nodo
  * Models a node in an 8 way linked list
  * @author Cecilia M. Curlango Rosas
  * @version 01 2026
  */
-
 public class Nodo {
+
     private int number; // INFO part
-    private Node up, down,
+    private Nodo up, down,
             left, right,
             downLeft, downRight,
             upLeft, upRight;
 
-
-    public Node(int number) {
+    public Nodo(int number) {
         this.number = number;
         up = null;
         down = null;
@@ -28,133 +28,141 @@ public class Nodo {
         upRight = null;
     }
 
-
     /**
-     * Updates all links
-     * to neighboring nodes so that
-     * nothing points to it anymore.
+     * Updates all links to neighboring nodes so that nothing points to it anymore.
      */
     public void delete() {
-
+        if (left!= null) left.right = right;
+        if (right!= null) right.left= left;
+        if (up!= null) up.down = down;
+        if (down!= null) down.up = up;
+        if (upLeft!= null) upLeft.downRight = downRight;
+        if (upRight!= null) upRight.downLeft = downLeft;
+        if (downLeft!= null) downLeft.upRight = upRight;
+        if (downRight!= null) downRight.upLeft = upLeft;
+        up = down = left = right = null;
+        downLeft = downRight = upLeft = upRight = null;
     }
+
     /**
-     * Returns whether input node is next to
-     * node.
+     * Returns whether input node is next to node.
      * @return true if nodes are next to each other
      */
-    public boolean isNeighbor(Node input) {
-
+    public boolean isNeighbor(Nodo input) {
+        if (input == null) return false;
+        return getNeighbors().contains(input);
     }
+
     /**
-     * Returns whether input node contains same value or
-     * adds up to 10.
+     * Returns whether input node contains same value or adds up to 10.
      * @return true if nodes contain the same value or add up to 10
      */
-    public boolean isMatchValue(Node input) {
-
+    public boolean isMatchValue(Nodo input) {
+        if (input == null) return false;
+        int a = number;
+        int b = input.number;
+        return (a == b) || (a + b == 10);
     }
+public Node getDown() {
+       return down;
+   }
 
 
-    public Node getDown() {
-        return down;
-    }
+   public void setDown(Node down) {
+       this.down = down;
+   }
 
 
-    public void setDown(Node down) {
-        this.down = down;
-    }
+   public Node getLeft() {
+       return left;
+   }
 
 
-    public Node getLeft() {
-        return left;
-    }
+   public void setLeft(Node left) {
+       this.left = left;
+   }
 
 
-    public void setLeft(Node left) {
-        this.left = left;
-    }
+   public Node getRight() {
+       return right;
+   }
 
 
-    public Node getRight() {
-        return right;
-    }
+   public void setRight(Node right) {
+       this.right = right;
+   }
 
 
-    public void setRight(Node right) {
-        this.right = right;
-    }
+   public Node getDownLeft() {
+       return downLeft;
+   }
 
 
-    public Node getDownLeft() {
-        return downLeft;
-    }
+   public void setDownLeft(Node downLeft) {
+       this.downLeft = downLeft;
+   }
 
 
-    public void setDownLeft(Node downLeft) {
-        this.downLeft = downLeft;
-    }
+   public Node getDownRight() {
+       return downRight;
+   }
 
 
-    public Node getDownRight() {
-        return downRight;
-    }
+   public void setDownRight(Node downRight) {
+       this.downRight = downRight;
+   }
 
 
-    public void setDownRight(Node downRight) {
-        this.downRight = downRight;
-    }
+   public Node getUpLeft() {
+       return upLeft;
+   }
 
 
-    public Node getUpLeft() {
-        return upLeft;
-    }
+   public void setUpLeft(Node upLeft) {
+       this.upLeft = upLeft;
+   }
 
 
-    public void setUpLeft(Node upLeft) {
-        this.upLeft = upLeft;
-    }
+   public Node getUpRight() {
+       return upRight;
+   }
 
 
-    public Node getUpRight() {
-        return upRight;
-    }
+   public void setUpRight(Node upRight) {
+       this.upRight = upRight;
+   }
 
 
-    public void setUpRight(Node upRight) {
-        this.upRight = upRight;
-    }
+   public Node getUp() {
+       return up;
+   }
 
 
-    public Node getUp() {
-        return up;
-    }
+   public void setUp(Node up) {
+       this.up = up;
+   }
 
 
-    public void setUp(Node up) {
-        this.up = up;
-    }
-
-
-    public int getNumber() {
-        return number;
-    }
-    public void setNumber(int number) {
-        this.number = number;
-    }
-
+   public int getNumber() {
+       return number;
+   }
+   public void setNumber(int number) {
+       this.number = number;
+   }
 
     @Override
-    public String toString() {
-        return number + "";
-
-    }
-
+    public String toString() { return number + ""; }
 
     /**
      * Returns an ArrayList containing all non-empty neighboring nodes
-     * @return ArrayList<Node> with neighboring non-empty nodes
+     * @return ArrayList<Nodo> with neighboring non-empty nodes
      */
-
-    public ArrayList<Node> getNeighbors() {
+    public ArrayList<Nodo> getNeighbors() {
+        ArrayList<Nodo> lista = new ArrayList<>();
+        for (Nodo n : new Nodo[]{ up, down, left, right,
+                upLeft, upRight, downLeft, downRight }) {
+            if (n != null) lista.add(n);
+        }
+        return lista;
     }
 }
